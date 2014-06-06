@@ -1,6 +1,7 @@
 # LazyAttributes
 
-TODO: Write a gem description
+lazy_attributes is an ActiveRecord plugin. lazy_attributes loads lazily
+specified attributes.
 
 ## Installation
 
@@ -18,7 +19,25 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+In Active Record model, specify attributes that are needed to be loaded
+lazyly with `lazy_attributes`:
+
+```ruby
+class User < ActiveRecord::Base
+  lazy_attributes :profile
+  lazy_attributes :address, :bio
+end
+```
+
+When model with lazyly-loaded attributes is associated with another
+model, you need specify `select` option in association with
+'.column_symbols_without_lazy'.
+
+```ruby
+class Group < ActiveRecord::Base
+  has_many :users, select: User.column_symbols_without_lazy
+end
+```
 
 ## Contributing
 
