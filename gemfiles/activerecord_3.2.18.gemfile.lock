@@ -53,6 +53,7 @@ DEPENDENCIES
   appraisal (~> 1.0.0)
   bundler (~> 1.6)
   database_cleaner
+  jdbc-sqlite3
   lazy_attributes!
   rake
   rspec

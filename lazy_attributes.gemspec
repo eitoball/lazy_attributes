@@ -24,5 +24,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'database_cleaner'
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rspec'
-  spec.add_development_dependency 'sqlite3'
+  unless RUBY_PLATFORM == 'jruby'
+    spec.add_development_dependency 'sqlite3'
+  else
+    spec.add_development_dependency 'jdbc-sqlite3'
+  end
 end
