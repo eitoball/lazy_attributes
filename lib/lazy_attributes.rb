@@ -1,5 +1,3 @@
-require 'lazy_attributes/version'
-
 module LazyAttributes
   extend ActiveSupport::Concern
 

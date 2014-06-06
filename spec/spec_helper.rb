@@ -3,8 +3,8 @@
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), *%w{ .. lib }))
 require 'rspec'
 require 'active_record'
+require 'logger'
 require 'lazy_attributes'
-require 'database_cleaner'
 
 ActiveRecord::Base.establish_connection(
   adapter: 'sqlite3',
@@ -26,11 +26,6 @@ class CreateTables < ActiveRecord::Migration
 end
 
 RSpec.configure do |config|
-  config.before(:suite) do
-    DatabaseCleaner.strategy = :truncation
-    DatabaseCleaner.clean_with(:truncation)
-  end
-
   config.before(:all) do
     CreateTables.new.up unless ActiveRecord::Base.connection.table_exists?('users')
   end
