@@ -3,6 +3,12 @@
 lazy_attributes is an ActiveRecord plugin. lazy_attributes loads lazily
 specified attributes.
 
+[![Build
+Status](https://travis-ci.org/eitoball/lazy_attributes.svg?branch=master)](https://travis-ci.org/eitoball/lazy_attributes) [![Gem Version](https://badge.fury.io/rb/lazy_attributes.svg)](http://badge.fury.io/rb/lazy_attributes)
+
+This gem is heavily inspired by
+[lazy_columns](https://github.com/jorgemanrubia/lazy_columns).
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -38,6 +44,11 @@ class Group < ActiveRecord::Base
   has_many :users, select: User.column_symbols_without_lazy
 end
 ```
+
+## TODO
+
+* Reload only attribute that is referenced
+* Clean up code and specs
 
 ## Contributing
 
