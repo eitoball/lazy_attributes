@@ -36,8 +36,16 @@ end
 ```
 
 When model with lazyly-loaded attributes is associated with another
-model, you need specify `select` option in association with
+model, you need specify scope for association with
 '.column_symbols_without_lazy'.
+
+```ruby
+class Group < ActiveRecord::Base
+  has_many :users, { select(User.column_symbols_without_lazy) }
+end
+```
+
+For Rails 3.2, use `select` option.
 
 ```ruby
 class Group < ActiveRecord::Base
