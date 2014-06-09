@@ -4,11 +4,6 @@ require 'spec_helper'
 
 describe LazyAttributes do
   it '' do
-    expect do
-      User.send(:lazy_attributes, :profile)
-      User.send(:lazy_attributes, :address)
-    end.to_not raise_error
-
     User.create!(
       name: 'John',
       profile: 'This attribute is suppose to be very long',
@@ -20,6 +15,22 @@ describe LazyAttributes do
     expect(user).to_not have_attribute(:address)
     expect(user.profile).to be_present
     expect(user.address).to eq('Somewhere over the rainbow')
+  end
+
+  describe '#<lazy_attribute>' do
+    let!(:user) { User.create!(name: 'John', profile: 'My profile...') }
+
+    it { expect(User.find(user.id).profile).to eq('My profile...') }
+
+    context 'association' do
+      before { user.groups.create!(name: 'Group A') }
+
+      it 'should not reload association' do
+        u = User.find(user.id)
+        u.groups.build(name: 'Group B')
+        expect { u.profile }.to_not change { u.groups.size }
+      end
+    end
   end
 
   describe '.count' do

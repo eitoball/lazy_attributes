@@ -12,11 +12,24 @@ ActiveRecord::Base.establish_connection(
 )
 ActiveRecord::Base.logger = Logger.new(STDOUT)
 
+class Group < ActiveRecord::Base
+  belongs_to :user
+end
+
 class User < ActiveRecord::Base
+  lazy_attributes :profile
+  lazy_attributes :address
+
+  has_many :groups
 end
 
 class CreateTables < ActiveRecord::Migration
   def up
+    create_table :groups do |t|
+      t.references :user
+      t.string :name
+    end
+
     create_table :users do |t|
       t.string :name
       t.text :profile

@@ -7,15 +7,6 @@ module LazyAttributes
       self._lazy_attributes = []
     end
 
-    def reload_but_keep_changes
-      return unless persisted?
-      changes_before_reload = changes.clone
-      reload
-      changes_before_reload.each do |attr_name, values|
-        send("#{attr_name}=", values[1])
-      end
-    end
-
     module ClassMethods
       def lazy_attributes(*attrs)
         if self._lazy_attributes.empty?
@@ -29,11 +20,17 @@ module LazyAttributes
         attrs.each do |attr|
           attr = attr.to_sym
           define_method(attr) do
-            reload_but_keep_changes unless has_attribute?(attr)
+            unless has_attribute?(attr)
+              self.class.define_attribute_method(attr)
+              write_attribute(attr, self.class.where(id: self.id).pluck(attr).first)
+            end
             read_attribute(attr)
           end
           define_method(:"#{attr}=") do |val|
-            reload_but_keep_changes unless has_attribute?(attr)
+            unless has_attribute?(attr)
+              self.class.define_attribute_method(attr)
+              write_attribute(attr, self.class.where(id: self.id).pluck(attr).first)
+            end
             write_attribute(attr, val)
           end
         end
