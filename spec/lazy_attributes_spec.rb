@@ -21,4 +21,25 @@ describe LazyAttributes do
     expect(user.profile).to be_present
     expect(user.address).to eq('Somewhere over the rainbow')
   end
+
+  describe '.count' do
+    context 'when no user exists' do
+      subject { User.count }
+      it { is_expected.to eq(0) }
+    end
+
+    context 'when one user exists' do
+      before { User.create! }
+
+      subject { User.count }
+      it { is_expected.to eq(1) }
+    end
+
+    context 'when two users exist' do
+      before { 2.times { User.create! } }
+
+      subject { User.count }
+      it { is_expected.to eq(2) }
+    end
+  end
 end
