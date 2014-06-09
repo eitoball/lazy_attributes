@@ -7,6 +7,13 @@ module LazyAttributes
       self._lazy_attributes = []
     end
 
+    def load_attribute(attr)
+      unless has_attribute?(attr)
+        write_attribute(attr, nil)
+        write_attribute(attr, self.class.where(id: self.id).select(attr).first.send(attr))
+      end
+    end
+
     module ClassMethods
       def lazy_attributes(*attrs)
         if self._lazy_attributes.empty?
@@ -20,17 +27,11 @@ module LazyAttributes
         attrs.each do |attr|
           attr = attr.to_sym
           define_method(attr) do
-            unless has_attribute?(attr)
-              self.class.define_attribute_method(attr)
-              write_attribute(attr, self.class.where(id: self.id).pluck(attr).first)
-            end
+            load_attribute(attr)
             read_attribute(attr)
           end
           define_method(:"#{attr}=") do |val|
-            unless has_attribute?(attr)
-              self.class.define_attribute_method(attr)
-              write_attribute(attr, self.class.where(id: self.id).pluck(attr).first)
-            end
+            load_attribute(attr)
             write_attribute(attr, val)
           end
         end
