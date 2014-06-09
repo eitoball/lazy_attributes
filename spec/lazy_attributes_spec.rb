@@ -33,6 +33,12 @@ describe LazyAttributes do
     end
   end
 
+  describe '.attributes' do
+    let!(:user) { User.create!(name: 'John', profile: 'My profile...') }
+
+    it { expect(User.find(user.id).attributes).to be_include('profile') }
+  end
+
   describe '.count' do
     context 'when no user exists' do
       subject { User.count }

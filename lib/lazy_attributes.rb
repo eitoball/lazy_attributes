@@ -50,8 +50,10 @@ module LazyAttributes
 end
 
 require_relative 'lazy_attributes/relation'
+require_relative 'lazy_attributes/attribute_methods'
 
 ActiveSupport.on_load :active_record do
   ActiveRecord::Base.send(:include, LazyAttributes::Base)
   ActiveRecord::Relation.send(:include, LazyAttributes::Relation)
+  ActiveRecord::Base.send(:include, LazyAttributes::AttributeMethods)
 end
