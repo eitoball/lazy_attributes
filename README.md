@@ -53,11 +53,6 @@ class Group < ActiveRecord::Base
 end
 ```
 
-## TODO
-
-* Reload only attribute that is referenced
-* Clean up code and specs
-
 ## Contributing
 
 1. Fork it ( https://github.com/[my-github-username]/lazy_attributes/fork )
