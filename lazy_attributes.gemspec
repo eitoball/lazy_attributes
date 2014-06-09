@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = "lazy_attributes"
-  spec.version       = '0.0.2'
+  spec.version       = '0.0.3'
   spec.authors       = ["Eito Katagiri"]
   spec.email         = ["eitoball@gmail.com"]
   spec.summary       = %q{ActiveRecord plugin to load specified attributes lazyly}
