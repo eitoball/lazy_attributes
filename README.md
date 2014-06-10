@@ -9,6 +9,10 @@ Status](https://travis-ci.org/eitoball/lazy_attributes.svg?branch=master)](https
 This gem is heavily inspired by
 [lazy_columns](https://github.com/jorgemanrubia/lazy_columns).
 
+## Supported versions
+
+ActiveRecord 3.2, 4.0, and 4.1
+
 ## Installation
 
 Add this line to your application's Gemfile:
